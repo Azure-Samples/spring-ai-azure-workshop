@@ -1,27 +1,28 @@
-# Prompt Roles for a Spring AI Application with Azure OpenAI
+# Spring AI - Prompt Roles
 
-This project contains a web service that will accept HTTP GET requests at
-`http://localhost:8080/ai/roles`
+The code for this example is in the package `com.xkcd.ai.roles`.
 
-There is a request parameter that is used in the User Message
+In that package there is a Spring REST Controller named `RoleController`.
 
-* `message` The user request message.
+The `PromptTemplateController` accepts HTTP GET requests at `http://localhost:8080/ai/roles` with three optional parameters
 
-The default value is `Tell me about 3 famous pirates from the Golden Age of Piracy and why they did.`
-
-There are two optional request parameters that are used in the System Message
-
-* `name` The name the AI assistant will use to identify itself.  The default value is `Bob`
-* `voice` The style of voice to use when responding.  The default value is `pirate`
+* `message` The user request message. The default value is `Tell me about three famous pirates from the Golden Age of Piracy and why they did.  Write at least a sentence for each pirate.`
+* `name`, The name of the AI assistant.  The default value is `Bob`
+* `voice`, The style of voice that the AI assistant will use to reply.  The default value is `pirate`
 
 The response to the request is from the Azure OpenAI Service.
 
 ## Roles
 
-The user message is the content of the request parameter 'message'. 
+For each role, a message is created that will be sent as part of the Prompt to the AI model.
 
-The system message is what sets the context for the AI Model to respond.
-The template for the system message is
+The User message is the content of the 'message'. 
+
+The System message is what sets the context for the AI Model to respond.
+
+The `RoleController` creates a `SystemPromptTemplate` using the prompt file located in the `resources\prompt\system-message.st`
+
+The file's contents are
 
 ```text
 You are a helpful AI assistant.
@@ -29,7 +30,15 @@ You are an AI assistant that helps people find information.
 Your name is {name}
 You should reply to the user's request with your name and also in the style of a {voice}.
 ```
-The request parameters `name` and `voice` in the controller are used to fill in the placeholders in the system template.
+
+The User message and the System message are combined together to create the `Prompt`
+
+```java
+Prompt prompt = new Prompt(List.of(userMessage, systemMessage));
+```
+
+The response to the request is from the Azure OpenAI Service.
+
 
 ## Building and running
 
@@ -44,6 +53,10 @@ Let's get a response using the default values.
 
 ```shell
 $ http GET localhost:8080/ai/roles
+```
+or using `curl`
+```shell
+curl http://localhost:8080/ai/roles
 ```
 
 A sample response is

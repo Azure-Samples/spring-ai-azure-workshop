@@ -32,7 +32,7 @@ public class RoleController {
 
     @GetMapping("/ai/roles")
     public List<Generation> generate(
-            @RequestParam(value = "message", defaultValue = "Tell me about 3 famous pirates from the Golden Age of Piracy and why they did.") String message,
+            @RequestParam(value = "message", defaultValue = "Tell me about three famous pirates from the Golden Age of Piracy and why they did.  Write at least a sentence for each pirate.") String message,
             @RequestParam(value = "name", defaultValue = "Bob") String name,
             @RequestParam(value = "voice", defaultValue = "pirate") String voice) {
         UserMessage userMessage = new UserMessage(message);

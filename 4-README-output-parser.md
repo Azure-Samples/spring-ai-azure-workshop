@@ -1,22 +1,38 @@
-# Using an Output Parser a Spring AI Application with Azure OpenAI
+# Spring AI - Output Parsers
 
-This project contains a web service that will accept HTTP GET requests at `http://localhost:8080/ai/output`
+The code for this example is in the package `com.xkcd.ai.output`.
 
-There is a request parameter that is used in the User Message
+In that package there is a Spring REST Controller named `OutputParserController`.
 
-* `actor` The user request message.
+The `OutputParserController` accepts HTTP GET requests at `http://localhost:8080/ai/output` with one optional parameter
 
-The default value is `Jeff Bridges`
+* `actor` The actor's name.  The default value is `Jeff Bridges`
+
+The actors name is used in the hardcoded text for the prompt
+
+```text
+String userMessage = """
+        Generate the filmography for the actor {actor}.
+        {format}
+        """;
+```
+
+The `format` variable is obtained from the `OutputParser`
 
 ## BeanOutputParser
 
 The `BeanOutputParser` generates an OpenAI JSON compliant schema for a JavaBean and provides instructions to use that schema when replying to a request.
 
-The output parser then takes the String response from the AI model uses Jackson to deserialize the String to a JavaBean.
+```java
+var outputParser = new BeanOutputParser<>(ActorsFilms.class);
+String format = outputParser.getFormat();
+```
 
-There is an web endpoint at `/ai/output` that passed in the hardcoded request to `Generate the filmography for a random actor.`
+The response from the Azure OpenAI Service is then parsed into the class `ActorsFilms`
 
-The reply from the AI model is mapped to the Java class `ActorsFilms` and returned in the web response.
+```java
+ActorsFilms actorsFilms = outputParser.parse(generation.getText());
+```
 
 ## Building and running
 
@@ -30,7 +46,11 @@ Run the project from your IDE or use the Maven command line
 Let's get a response using the default values.
 
 ```shell
-$ http GET localhost:8080/ai/output
+http GET localhost:8080/ai/output
+```
+or using `curl`
+```shell
+curl http://localhost:8080/ai/output
 ```
 
 The response is
@@ -95,7 +115,11 @@ The response is
 ```
 Now lets change the default values
 ```shell
-$  http GET localhost:8080/ai/output actor=="Bill Murray"
+http GET localhost:8080/ai/output actor=="Bill Murray"
+```
+or using `curl`
+```shell
+curl --get  --data-urlencode 'actor=Bill Murray' http://localhost:8080/ai/output 
 ```
 
 A sample response is

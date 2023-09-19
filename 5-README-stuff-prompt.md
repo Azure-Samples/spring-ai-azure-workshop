@@ -1,4 +1,4 @@
-# Stuffing the Prompt in Generative AI Models
+# Spring AI - Stuffing the Prompt
 
 ## Introduction
 
@@ -11,14 +11,23 @@ Therefore, without furnishing additional data in the prompt, the model won't be 
 
 The technique simply includes a document within the prompt sent to Azure OPenAI that provides information about Curling in the 2022 Olympics.
 
-The project demonstrates this concept with a web service that accepts HTTP GET requests at `http://localhost:8080/ai/stuff``
+## Code Location and walkthrough
 
-There is a request parameter named `message` whose default value is
+The code for this example is in the package `com.xkcd.ai.stuff`.
 
+In that package there is a Spring REST Controller named `StuffController`.
+
+The `PromptTemplateController` accepts HTTP GET requests at `http://localhost:8080/ai/stuff` with one optional parameter.
+
+
+* `message` The question to ask about the Curling competition 2022 winter olymptics.
+
+The default value is
 ```
 Which athletes won the gold medal in curling at the 2022 Winter Olympics?
 ```
 
+The response to the request is from the Azure OpenAI Service.
 
 ## Building and running
 
@@ -34,6 +43,10 @@ Using the `http` utility to send a request without any additional information in
 
 ```shell
 http GET localhost:8080/ai/stuff
+```
+or using `curl`
+```shell
+curl http://localhost:8080/ai/stuff
 ```
 
 This will result in a response like this:
@@ -57,6 +70,11 @@ To stuff the prompt, send a request with the `stuffit` request parameter set to 
 ```shell
 http GET localhost:8080/ai/stuff stuffit==true
 ```
+or using `curl`
+```shell
+curl --get  --data-urlencode 'stuffit=true' http://localhost:8080/ai/stuff 
+```
+
 
 The response will include information about gold medalists in curling at the 2022 Winter Olympics:
 

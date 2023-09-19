@@ -58,14 +58,11 @@ public class RagService {
         logger.info("Embeddings created.");
 
         // Step 3 retrieve related documents to query
-
-        VectorStoreRetriever vectorStoreRetriever = new VectorStoreRetriever(vectorStore);
         logger.info("Retrieving relevant documents");
-        List<Document> similarDocuments = vectorStoreRetriever.retrieve(message);
+        List<Document> similarDocuments = vectorStore.similaritySearch(message);
         logger.info(String.format("Found %s relevant documents.", similarDocuments.size()));
 
         // Step 4 Embed documents into SystemMessage with the `system-qa.st` prompt template
-
         Message systemMessage = getSystemMessage(similarDocuments);
         UserMessage userMessage = new UserMessage(message);
 
