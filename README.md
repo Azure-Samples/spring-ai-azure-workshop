@@ -2,12 +2,28 @@
 
 ## Prerequisites
 
-Before you beginm make sure to set the following environment variables.
+Create an OpenAI resource and a deployment in Azure Portal - [Instructions here](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
+
+For the Type, choose option 1: Allow all networks
+
+Before you begin make sure to set the following environment variables and values in application.properties
+
+### Add the OpenAI API Key and Endpoint from the Azure Portal > < Your OpenAI Resource> > Keys and Endpoint
 
 ```shell
 export SPRING_AI_AZURE_OPENAI_API_KEY=<INSERT KEY HERE>
 export SPRING_AI_AZURE_OPENAI_ENDPOINT=<INSERT ENDPOINT URL HERE>
 ```
+
+Next, set the following environment variables and values in application.properties to match your deployment in Open AI Studio.  In this example, the Deployment name is `gpt-35-turbo-16k` and the Model name is `gpt-35-turbo-16k`.
+
+### 
+```shell
+spring.ai.azure.openai.model=gpt-35-turbo-16k
+spring.ai.azure.openai.temperature=0.7
+spring.ai.azure.openai.deploymentOrModelId=gpt-35-turbo-16k
+```
+
 ## Workshop Overview
 
 The workshop consists of six examples, each with a dedicated `README` file.
