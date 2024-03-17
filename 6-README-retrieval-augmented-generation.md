@@ -1,4 +1,4 @@
-    # Spring AI - Retrieval Augmented Generation
+# Spring AI - Retrieval Augmented Generation
 
 The code for this example is in the package `com.xkcd.ai.rag`.
 
@@ -42,7 +42,7 @@ Create embeddings for the documents.  This calls the Azure OpenAI embedding endp
 
 ### Create a Prompt
 
-The `Prompt` is created from a System message and a User message.  The System message contains the similar documents retrieved from the `VectorStore`.  The User message is the user's input to the `RagController` request parameter `message`
+The `Prompt` is created from a System message and a User message.  The System message contains similar documents retrieved from the `VectorStore`.  The User message is the user's input to the `RagController` request parameter `message`
 
 ```java
         Message systemMessage = getSystemMessage(similarDocuments);
@@ -86,7 +86,7 @@ A sample response is
 }
 ```
 
-Now using the `message` request parameter to ask about a specific bike.
+Now use the `message` request parameter to ask about a specific bike.
 
 ```shell
 $  http GET localhost:8080/ai/rag message=="Tell me some details about the SwiftRide Hybrid"
