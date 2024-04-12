@@ -68,7 +68,7 @@ In the `resources\docs\` directory, there's a file named `wikipedia-curling.md` 
 To stuff the prompt, send a request with the `stuffit` request parameter set to true.
 
 ```shell
-http GET localhost:8080/ai/stuff stuffit==true
+http GET localhost:8080/ai/stuff stuffit=true
 ```
 or using `curl`
 ```shell
