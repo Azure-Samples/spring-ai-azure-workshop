@@ -9,7 +9,7 @@ By incorporating data into the prompt, you enable AI models to generate more acc
 For this example, we'll explore a query about Curling in the 2022 Olympics. The dataset used to train the AI model only goes up until September 2021. 
 Therefore, without furnishing additional data in the prompt, the model won't be capable of answering the question.
 
-The technique simply includes a document within the prompt sent to Azure OPenAI that provides information about Curling in the 2022 Olympics.
+The technique simply includes a document within the prompt sent to Azure OpenAI that provides information about Curling in the 2022 Olympics.
 
 ## Code Location and walkthrough
 
